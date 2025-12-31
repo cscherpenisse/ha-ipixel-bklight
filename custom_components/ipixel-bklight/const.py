@@ -1,4 +1,4 @@
-DOMAIN = "ipixel_bklight"
+DOMAIN = "ipixel-bklight"
 
 DEVICE_NAME = "BK-Light iPixel"
 MANUFACTURER = "BK-Light"
