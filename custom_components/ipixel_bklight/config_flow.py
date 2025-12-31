@@ -1,7 +1,6 @@
 import voluptuous as vol
 
 from homeassistant import config_entries
-from homeassistant.components.bluetooth import async_discovered_devices
 
 from .const import DOMAIN
 
@@ -18,20 +17,16 @@ class IPixelBklightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data=user_input,
             )
 
-        devices = async_discovered_devices(self.hass)
-
-        ble_devices = {
-            device.address: f"{device.name or 'Unknown'} ({device.address})"
-            for device in devices
-        }
-
-        if not ble_devices:
-            ble_devices = {"": "No Bluetooth devices found"}
-
         schema = vol.Schema(
             {
-                vol.Required("address"): vol.In(ble_devices),
-                vol.Required("name", default="BK-Light iPixel"): str,
+                vol.Required(
+                    "address",
+                    description={"suggested_value": "AA:BB:CC:DD:EE:FF"},
+                ): str,
+                vol.Required(
+                    "name",
+                    default="BK-Light iPixel",
+                ): str,
             }
         )
 
