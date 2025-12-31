@@ -6,7 +6,9 @@ from homeassistant.components.bluetooth import async_discovered_devices
 from .const import DOMAIN
 
 
-class IPixelBKLightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class IPixelBklightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Config flow for BK-Light iPixel."""
+
     VERSION = 1
 
     async def async_step_user(self, user_input=None):
@@ -23,13 +25,13 @@ class IPixelBKLightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             for device in devices
         }
 
+        if not ble_devices:
+            ble_devices = {"": "No Bluetooth devices found"}
+
         schema = vol.Schema(
             {
                 vol.Required("address"): vol.In(ble_devices),
-                vol.Required(
-                    "name",
-                    default="BK-Light iPixel",
-                ): str,
+                vol.Required("name", default="BK-Light iPixel"): str,
             }
         )
 
